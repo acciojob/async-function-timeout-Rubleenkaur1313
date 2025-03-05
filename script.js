@@ -1,19 +1,16 @@
-document.getElementById('messageForm').addEventListener('submit', async function(event) {
-    event.preventDefault(); // Prevent the form from submitting the traditional way
+document.getElementById("btn").addEventListener("click", async function () {
+    const text = document.getElementById("text").value;
+    const delay = parseInt(document.getElementById("delay").value, 10);
+    const outputDiv = document.getElementById("output");
+    
+    if (!text || isNaN(delay) || delay < 0) {
+        outputDiv.textContent = "Please enter valid text and a positive delay.";
+        return;
+    }
 
-    // Retrieve values from the input fields
-    const message = document.getElementById('text').value;
-    const delay = parseInt(document.getElementById('delay').value, 10);
-
-    // Call the function to display the message after the delay
-    await displayMessageAfterDelay(message, delay);
+    outputDiv.textContent = "Waiting...";
+    
+    await new Promise(resolve => setTimeout(resolve, delay));
+    
+    outputDiv.textContent = text;
 });
-
-function delay(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function displayMessageAfterDelay(message, delay) {
-    await delay(delay); // Wait for the specified delay
-    document.getElementById('output').textContent = message; // Display the message
-}
